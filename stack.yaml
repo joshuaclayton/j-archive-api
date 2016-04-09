@@ -6,4 +6,5 @@ extra-deps:
 - heroku-0.1.2.3
 - text-1.2.2.1
 - yaml-0.8.16
+- heroku-persistent-0.2.0
 resolver: lts-5.11
