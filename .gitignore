@@ -18,3 +18,7 @@ cabal.sandbox.config
 *.keter
 .sass-cache/
 .env
+node_modules/
+elm-stuff/
+static/css/bundle.*
+static/js/bundle.*

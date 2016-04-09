@@ -1,0 +1,34 @@
+{
+  "name": "j-archive-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "css-loader": "^0.23.1",
+    "elm": "^0.16.0",
+    "elm-hot-loader": "^0.2.2",
+    "elm-webpack-loader": "^2.0.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.15.0",
+    "node-sass": "^3.4.2",
+    "postcss-loader": "^0.8.2",
+    "sass-loader": "^3.2.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-merge": "^0.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Josh",
+  "license": "MIT"
+}
