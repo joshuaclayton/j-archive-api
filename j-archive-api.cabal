@@ -85,6 +85,7 @@ library
                  , case-insensitive
                  , wai
                  , heroku-persistent
+                 , heroku
 
 executable         j-archive-api
     if flag(library-only)
