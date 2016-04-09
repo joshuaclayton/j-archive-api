@@ -12,12 +12,13 @@ import Data.Aeson                  (Result (..), fromJSON, withObject, (.!=),
                                     (.:?))
 import Data.FileEmbed              (embedFile)
 import Data.Yaml                   (decodeEither')
-import Database.Persist.Postgresql (PostgresConf)
+import Database.Persist.Postgresql (PostgresConf(..))
 import Language.Haskell.TH.Syntax  (Exp, Name, Q)
 import Network.Wai.Handler.Warp    (HostPreference)
 import Yesod.Default.Config2       (applyEnvValue, configSettingsYml)
 import Yesod.Default.Util          (WidgetFileSettings, widgetFileNoReload,
                                     widgetFileReload)
+import Web.Heroku.Postgres         (parseDatabaseUrl)
 
 -- | Runtime settings to configure this application. These settings can be
 -- loaded from various sources: defaults, environment variables, config files,
@@ -65,7 +66,9 @@ instance FromJSON AppSettings where
                 False
 #endif
         appStaticDir              <- o .: "static-dir"
-        appDatabaseConf           <- o .: "database"
+        appDatabaseConf           <- fromDatabaseUrl
+                                        <$> o .: "database-pool-size"
+                                        <*> o .: "database-url"
         appRoot                   <- o .:? "approot"
         appHost                   <- fromString <$> o .: "host"
         appPort                   <- o .: "port"
@@ -81,6 +84,18 @@ instance FromJSON AppSettings where
         appAnalytics              <- o .:? "analytics"
 
         return AppSettings {..}
+
+fromDatabaseUrl :: Int -> String -> PostgresConf
+fromDatabaseUrl poolSize url = PostgresConf
+        { pgConnStr = formatParams $ parseDatabaseUrl url
+        , pgPoolSize = poolSize
+        }
+  where
+    formatParams :: [(Text, Text)] -> ByteString
+    formatParams = encodeUtf8 . unwords . map toKeyValue
+
+    toKeyValue :: (Text, Text) -> Text
+    toKeyValue (k, v) = k <> "=" <> v
 
 -- | Settings for 'widgetFile', such as which template languages to support and
 -- default Hamlet settings.

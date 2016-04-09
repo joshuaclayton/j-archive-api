@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+_psql() { PGPASSWORD="$user" psql --no-psqlrc --username "$user" "$@"; }
+
+app='jarchiveapi'
+user="$app"
+
+# Create databases
+createdb "${app}_development" 2>/dev/null || true
+createdb "${app}_test" 2>/dev/null || true
+
+# Grant privileges
+psql template1 >/dev/null <<SQL
+  DO
+  \$body\$
+    BEGIN
+      IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE usename = '$user')
+      THEN CREATE USER $user WITH PASSWORD '$user';
+      END IF;
+    END
+  \$body\$;
+  GRANT ALL PRIVILEGES ON DATABASE ${app}_development to $user;
+  GRANT ALL PRIVILEGES ON DATABASE ${app}_test to $user;
+SQL
+
+# Test connections
+_psql --dbname "${app}_development" </dev/null
+_psql --dbname "${app}_test" </dev/null

@@ -84,6 +84,7 @@ library
                  , time
                  , case-insensitive
                  , wai
+                 , heroku
 
 executable         j-archive-api
     if flag(library-only)

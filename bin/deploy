@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# usage: ./bin/deploy ENV
+#
+#   ENV defaults to staging
+#
+###
+set -e
+
+case "${1:-staging}" in
+  staging)
+    heroku docker:release --app j-archive-api-staging
+    ;;
+  production)
+    heroku pipelines:promote --app j-archive-api-staging
+    heroku restart --app j-archive-api-production
+    ;;
+  *)
+    sed '/^# \(usage:.*\)/!d; s//\1/' "$0" >&2
+    exit 64
+    ;;
+esac
