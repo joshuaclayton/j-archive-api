@@ -30,20 +30,20 @@ npm install
 stack exec -- yesod devel
 ```
 
-### Webpack
+### Webpack and Livereload
+
+You'll need [Foreman].
+
+[Foreman]: http://ddollar.github.io/foreman/
 
 ```sh
-node_modules/webpack/bin/webpack.js --watch
+foreman start -f Procfile.dev
 ```
 
-### LiveReload
-
-```sh
-node_modules/livereload/bin/livereload.js . -e 'hamlet julius lucius cassius hs js css'
-```
-
-Note that LiveReload is occasionally too fast to catch changes to `*.hs`
+Note that [LiveReload] is occasionally too fast to catch changes to `*.hs`
 files.
+
+[LiveReload]: https://www.npmjs.com/package/livereload
 
 ## Deployment
 

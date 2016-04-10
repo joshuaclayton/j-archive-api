@@ -1,0 +1,2 @@
+webpack: node_modules/webpack/bin/webpack.js --watch
+livereload: node_modules/livereload/bin/livereload.js . -e 'hamlet julius lucius cassius hs js css'
