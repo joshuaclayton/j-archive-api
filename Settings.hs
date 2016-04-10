@@ -49,6 +49,8 @@ data AppSettings = AppSettings
     -- ^ Assume that files in the static dir may change after compilation
     , appSkipCombining          :: Bool
     -- ^ Perform no stylesheet/script combining
+    , appLiveReload             :: Bool
+    -- ^ Use LiveReload to reload the application
 
     -- Example app-specific configuration values.
     , appCopyright              :: Text
@@ -79,6 +81,7 @@ instance FromJSON AppSettings where
         appReloadTemplates        <- o .:? "reload-templates" .!= defaultDev
         appMutableStatic          <- o .:? "mutable-static"   .!= defaultDev
         appSkipCombining          <- o .:? "skip-combining"   .!= defaultDev
+        appLiveReload             <- o .:? "live-reload"      .!= defaultDev
 
         appCopyright              <- o .: "copyright"
         appAnalytics              <- o .:? "analytics"

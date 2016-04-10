@@ -46,8 +46,9 @@ $newline never
       <header>
       <div id="main" role="main">
         ^{pageBody pc}
-      <footer>
-        #{appCopyright $ appSettings master}
+
+        <footer>
+          #{preEscapedToHtml $ appCopyright $ appSettings master}
 
     $maybe analytics <- appAnalytics $ appSettings master
       <script>
@@ -58,4 +59,10 @@ $newline never
           \  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
           \  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
+        }
+    $if appLiveReload $ appSettings master
+      <script>
+        if(window.location.href.match(/localhost/)){
+          document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+          ':35729/livereload.js?snipver=1"></' + 'script>')
         }
