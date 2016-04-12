@@ -6,4 +6,4 @@ database:
   # something like:
   #
   #   database: "_env:PGDATABASE:j-archive-api_LOWER_test"
-  database: j-archive-api_LOWER_test
+  database: jarchiveapi_test

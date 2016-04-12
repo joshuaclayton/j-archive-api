@@ -11,3 +11,10 @@ import Database.Persist.Quasi
 -- http://www.yesodweb.com/book/persistent/
 share [mkPersist sqlSettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
+
+instance ToJSON (Entity Category) where
+    toJSON (Entity cid c) = object
+        [ "id"          .= (String $ toPathPiece cid)
+        , "title"       .= categoryTitle c
+        , "clues-count" .= categoryCluesCount c
+        ]
